@@ -20,7 +20,7 @@ CREATE TABLE Books (
     isbn VARCHAR(20) UNIQUE,
     price DECIMAL(10,2) NOT NULL,
     category_id INT REFERENCES Categories(category_id) ON DELETE SET NULL,
-    stock_quantity INT DEFAULT 0
+    stock_quantity INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Authors (
@@ -49,7 +49,7 @@ CREATE TABLE Orders (
     order_id SERIAL PRIMARY KEY,
     customer_id INT REFERENCES Customers(customer_id) ON DELETE CASCADE,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(50) CHECK (status IN ('Pending', 'Shipped', 'Completed'))
+    status VARCHAR(50) CHECK (status IN ('Pending', 'Shipped', 'Completed')) NOT NULL
 );
 
 CREATE TABLE OrderItems (
@@ -59,29 +59,3 @@ CREATE TABLE OrderItems (
     quantity INT NOT NULL CHECK (quantity > 0),
     unit_price DECIMAL(10,2) NOT NULL
 );
-
-
-
-
-
---leetcode1
-    
-SELECT product_id
-FROM Products
-WHERE low_fats = 'Y' AND recyclable = 'Y';
-
---leetcode2
-
-async function addTwoPromises(promise1, promise2) {
-    const [value1, value2] = await Promise.all([promise1, promise2]);
-    return value1 + value2;
-}
-
-// Test
-const promise1 = new Promise(resolve => setTimeout(() => resolve(2), 20));
-const promise2 = new Promise(resolve => setTimeout(() => resolve(5), 60));
-
-addTwoPromises(promise1, promise2).then(console.log); // Output: 7
-
-
-
